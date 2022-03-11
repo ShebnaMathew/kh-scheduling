@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/kh-scheduling/static/css/main.01838a01.css",
+    "main.js": "/kh-scheduling/static/js/main.1487c290.js",
+    "static/js/787.3ab8ad98.chunk.js": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/fontawesome-webfont.eot": "/kh-scheduling/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "index.html": "/kh-scheduling/index.html",
+    "main.01838a01.css.map": "/kh-scheduling/static/css/main.01838a01.css.map",
+    "main.1487c290.js.map": "/kh-scheduling/static/js/main.1487c290.js.map",
+    "787.3ab8ad98.chunk.js.map": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01838a01.css",
+    "static/js/main.1487c290.js"
+  ]
+}
