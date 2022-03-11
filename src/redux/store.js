@@ -20,9 +20,9 @@ function rootReducer(state = INITIAL_STATE, action) {
                 if(action.payload.blocked.date) {
                 let tmp = state.blockout
                 tmp[action.payload.blocked.date] = action.payload.blocked.volunteers
-                return {...state, blockout: tmp, volunteersBlockout: [], currentDate: '', volunteersBlockoutStillAvail: ['Thomas','Kevin','Shebna','Maura','Nate','Anuj','Satish', 'Michael','Jacob','PT','Sam']};
+                return {...state, blockout: tmp, nodate: false, volunteersBlockout: [], currentDate: '', volunteersBlockoutStillAvail: ['Thomas','Kevin','Shebna','Maura','Nate','Anuj','Satish', 'Michael','Jacob','PT','Sam']};
                 } else {
-                    return state;
+                    return {...state, nodate: true} 
                 }
             }
             

@@ -44,6 +44,18 @@
   z-index: 1;
 }
 
+.kh-color {
+  color: white;
+}
+
+.kh-view {
+  display: inherit;
+}
+
+.fade:not(.show) {
+  opacity: 1;
+}
+
 .kh-max-height {
   max-height: 300px;
   overflow-y: scroll;

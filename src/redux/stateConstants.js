@@ -8,5 +8,6 @@ export const INITIAL_STATE = {
     currentDate: '',
     volunteersBlockout: [],
     volunteersBlockoutStillAvail: ['Thomas','Kevin','Shebna','Maura','Nate','Anuj','Satish', 'Michael','Jacob','PT','Sam'],
-    scheduleCreated: false
+    scheduleCreated: false,
+    nodate: false
 }

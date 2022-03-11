@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/kh-scheduling/static/css/main.aa406acf.css",
-    "main.js": "/kh-scheduling/static/js/main.eb2cf044.js",
+    "main.css": "/kh-scheduling/static/css/main.531944e2.css",
+    "main.js": "/kh-scheduling/static/js/main.07a1543d.js",
     "static/js/787.3ab8ad98.chunk.js": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js",
-    "static/media/fontawesome-webfont.svg?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
-    "static/media/fontawesome-webfont.eot": "/kh-scheduling/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
-    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
-    "static/media/fontawesome-webfont.woff?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
-    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/kh-scheduling/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/fa-solid-900.ttf": "/kh-scheduling/static/media/fa-solid-900.79da213423ac0def2058.ttf",
+    "static/media/fa-brands-400.ttf": "/kh-scheduling/static/media/fa-brands-400.0a1b701f5563c2288281.ttf",
+    "static/media/fa-solid-900.woff2": "/kh-scheduling/static/media/fa-solid-900.4896d4b04430cc3dfb06.woff2",
+    "static/media/fa-brands-400.woff2": "/kh-scheduling/static/media/fa-brands-400.f77bcc98bb7468c8b15a.woff2",
+    "static/media/fa-regular-400.ttf": "/kh-scheduling/static/media/fa-regular-400.15d98c18221c8bcb2334.ttf",
+    "static/media/fa-regular-400.woff2": "/kh-scheduling/static/media/fa-regular-400.d79c2ec96ab9ff1161a2.woff2",
+    "static/media/fa-v4compatibility.ttf": "/kh-scheduling/static/media/fa-v4compatibility.52eba2c567c521b8d58a.ttf",
+    "static/media/fa-v4compatibility.woff2": "/kh-scheduling/static/media/fa-v4compatibility.3d503f89ccaf1b224aa5.woff2",
     "index.html": "/kh-scheduling/index.html",
-    "main.aa406acf.css.map": "/kh-scheduling/static/css/main.aa406acf.css.map",
-    "main.eb2cf044.js.map": "/kh-scheduling/static/js/main.eb2cf044.js.map",
+    "main.531944e2.css.map": "/kh-scheduling/static/css/main.531944e2.css.map",
+    "main.07a1543d.js.map": "/kh-scheduling/static/js/main.07a1543d.js.map",
     "787.3ab8ad98.chunk.js.map": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.aa406acf.css",
-    "static/js/main.eb2cf044.js"
+    "static/css/main.531944e2.css",
+    "static/js/main.07a1543d.js"
   ]
 }
