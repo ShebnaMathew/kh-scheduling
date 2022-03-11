@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/kh-scheduling/static/css/main.531944e2.css",
-    "main.js": "/kh-scheduling/static/js/main.5d30e278.js",
+    "main.css": "/kh-scheduling/static/css/main.a004967d.css",
+    "main.js": "/kh-scheduling/static/js/main.505ce489.js",
     "static/js/787.3ab8ad98.chunk.js": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js",
     "static/media/fa-solid-900.ttf": "/kh-scheduling/static/media/fa-solid-900.79da213423ac0def2058.ttf",
     "static/media/fa-brands-400.ttf": "/kh-scheduling/static/media/fa-brands-400.0a1b701f5563c2288281.ttf",
@@ -12,12 +12,12 @@
     "static/media/fa-v4compatibility.ttf": "/kh-scheduling/static/media/fa-v4compatibility.52eba2c567c521b8d58a.ttf",
     "static/media/fa-v4compatibility.woff2": "/kh-scheduling/static/media/fa-v4compatibility.3d503f89ccaf1b224aa5.woff2",
     "index.html": "/kh-scheduling/index.html",
-    "main.531944e2.css.map": "/kh-scheduling/static/css/main.531944e2.css.map",
-    "main.5d30e278.js.map": "/kh-scheduling/static/js/main.5d30e278.js.map",
+    "main.a004967d.css.map": "/kh-scheduling/static/css/main.a004967d.css.map",
+    "main.505ce489.js.map": "/kh-scheduling/static/js/main.505ce489.js.map",
     "787.3ab8ad98.chunk.js.map": "/kh-scheduling/static/js/787.3ab8ad98.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.531944e2.css",
-    "static/js/main.5d30e278.js"
+    "static/css/main.a004967d.css",
+    "static/js/main.505ce489.js"
   ]
 }

@@ -59,7 +59,6 @@
 .kh-max-height {
   max-height: 300px;
   overflow-y: scroll;
-  
 }
 
 .kh-empty-content {
@@ -74,30 +73,6 @@
   text-align: center;
 }
 
-.kh-float-display {
-  display: float;
-}
-
-.kh-float-left {
-  float: left;
-}
-
-.kh-float-right {
-  float: right;
-}
-
-.kh-float-done {
-  clear: both;
-}
-
-.kh-width {
-  max-width: 40%;
-}
-
-.kh-width-10 {
-  width: 10%;
-}
-
-.kh-width-15 {
-  width: 15%;
+.kh-width-max-content {
+  width: max-content;
 }

@@ -203,26 +203,39 @@ const Home = () => {
                     <Date date={date} nodate={nodate}/>
                 </div>
             </div>
+
             <div className="row mb-5 justify-content-center">
-                <div className="col-4 align-self-end">
+                <div className="col-4 align-self-end d-none d-md-block ">
                     <VolunteerList volunteers={volunteersBlockoutStillAvail} display={false}/>
                 </div>
-                <div className="col-4 align-self-start kh-empty">
+                <div className="col-4 align-self-start kh-empty d-none d-md-block ">
                 {(vols.length > 0)? 
                 
                     <VolunteerList volunteers={vols} display={true}/>
                 :<div className="kh-empty-content">None selected</div>}</div>
-                <div className="kh-float-done"></div>
+            </div>
+
+            <div className="row mb-5 justify-content-center d-sm-block d-md-none">
+                <div className="col-10">
+                    <VolunteerList volunteers={volunteersBlockoutStillAvail} display={false}/>
+                </div>
+            </div>
+            <div className="row mb-5 justify-content-center d-sm-block d-md-none">
+                <div className="col-10 kh-empty">
+                    {(vols.length > 0)? 
+                        <VolunteerList volunteers={vols} display={true}/>
+                    :<div className="kh-empty-content">None selected</div>}
+                </div>
             </div>
             
             <div className="row mb-5">
                 <div className="col">
-                    <button type="button" class="btn btn-primary kh-width-10" onClick={() => dispatch(setBlockoutsForCurrentDate({date: date, volunteers: vols}))}>Save</button>
+                    <button type="button" class="btn btn-primary kh-width-max-content" onClick={() => dispatch(setBlockoutsForCurrentDate({date: date, volunteers: vols}))}>Save</button>
                 </div>
             </div>
             <div className="row mb-5">
                 <div className="col">
-                    <button type="button" class="btn btn-danger kh-width-15" onClick={() => createSchedule()}>Create Schedule</button>
+                    <button type="button" class="btn btn-danger kh-width-max-content" onClick={() => createSchedule()}>Create Schedule</button>
                 </div>
             </div>
             <div className="row mb-5">
