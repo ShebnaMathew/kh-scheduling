@@ -164,7 +164,7 @@ const Home = () => {
             <div class="container-fluid">
                 <a class="navbar-brand me-0 pe-0" href="#">
                 <img src="KingsHillLogo.png" alt="" width="30" height="24" class="d-inline-block align-text-top pe-2"/>
-                 KH Scheduling
+                 KH Scheduler
                 </a>
                 <button type="button" class="btn btn-primary" onClick={() => setShowModal(true)}>
                 <i class="far fa-question-circle"></i>
