@@ -8,6 +8,7 @@ const Home = () => {
 
     const blockouts = useSelector(state => state.blockout);
     const slides = useSelector(state => state.slides);
+    const volunteersBlockoutStillAvail = useSelector(state => state.volunteersBlockoutStillAvail);
     const livestream = useSelector(state => state.livestream);
     const sound = useSelector(state => state.sound);
     const lead = useSelector(state => state.lead);
@@ -103,7 +104,7 @@ const Home = () => {
             <div class="container-fluid">
                 <a class="navbar-brand me-0 pe-0" href="#">
                 <img src="KingsHillLogo.png" alt="" width="30" height="24" class="d-inline-block align-text-top pe-2"/>
-                KH Scheduling
+                 KH Scheduling
                 </a>
             </div>
         </nav>
@@ -114,11 +115,18 @@ const Home = () => {
                     <Date/>
                 </div>
             </div>
-            <div className="row mb-5">
-                <div className="col kh-width">
-                    <VolunteerList/>
+            <div className="row mb-5 justify-content-center">
+                <div className="col-4 align-self-end">
+                    <VolunteerList volunteers={volunteersBlockoutStillAvail} display={false}/>
                 </div>
+                <div className="col-4 align-self-start kh-empty">
+                {(vols.length > 0)? 
+                
+                    <VolunteerList volunteers={vols} display={true}/>
+                :<div className="kh-empty-content">None selected</div>}</div>
+                <div className="kh-float-done"></div>
             </div>
+            
             <div className="row mb-5">
                 <div className="col">
                     <button type="button" class="btn btn-primary kh-width-10" onClick={() => dispatch(setBlockoutsForCurrentDate({date: date, volunteers: vols}))}>Save</button>

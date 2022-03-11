@@ -7,5 +7,6 @@ export const INITIAL_STATE = {
     schedule: [],
     currentDate: '',
     volunteersBlockout: [],
+    volunteersBlockoutStillAvail: ['Thomas','Kevin','Shebna','Maura','Nate','Anuj','Satish', 'Michael','Jacob','PT','Sam'],
     scheduleCreated: false
 }
