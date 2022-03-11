@@ -37,6 +37,13 @@
   }
 }
 
+.kh-position-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .kh-max-height {
   max-height: 300px;
   overflow-y: scroll;

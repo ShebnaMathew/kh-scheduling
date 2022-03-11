@@ -100,7 +100,7 @@ const Home = () => {
 
     return(
         <>
-        <nav class="navbar navbar-dark bg-primary">
+        <nav class="navbar navbar-dark bg-primary kh-position-fixed">
             <div class="container-fluid">
                 <a class="navbar-brand me-0 pe-0" href="#">
                 <img src="KingsHillLogo.png" alt="" width="30" height="24" class="d-inline-block align-text-top pe-2"/>
@@ -108,7 +108,7 @@ const Home = () => {
                 </a>
             </div>
         </nav>
-        <div className="container mt-5 kh-text-align-center">
+        <div className="container mt-5 pt-5 kh-text-align-center">
             <div className="row mb-5">
                 <div className="col">
                     <h6>Select a date to input blockouts</h6>
