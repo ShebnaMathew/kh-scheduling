@@ -5,13 +5,11 @@ const VolunteerList = (props) => {
 
     const volunteers = props.volunteers;
     const display = props.display;
-    console.log("volunteers in ehre: ", volunteers);
-    console.log("display: ", display)
     
     const dispatch = useDispatch();
 
     return(
-        <ul class="list-group kh-max-height kh-empty-content">
+        <ul class="list-group kh-max-height kh-empty-content kh-round-borders">
             {volunteers.map((vol) => 
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 {vol}

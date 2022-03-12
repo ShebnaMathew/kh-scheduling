@@ -3,79 +3,95 @@ import {setBlockoutsForCurrentDate, setSchedule} from "../redux/actions";
 import Date from './Date';
 import VolunteerList from './VolunteerList';
 import Schedule from './Schedule';
-import { useState } from 'react';
+import Nav from './Nav';
 
 const Home = () => {
 
-    const [showModal, setShowModal] = useState(false);
-    
-    const nodate = useSelector(state => state.nodate);
-    const blockouts = useSelector(state => state.blockout);
+    const nodate = useSelector(state => state.nodate);  // display an error if no date selected but there are selected volunteers
+    const blockouts = useSelector(state => state.blockout); // array holding the blockout info - [{'blockout_date':[volunteers]}]
     const slides = useSelector(state => state.slides);
     const livestream = useSelector(state => state.livestream);
     const sound = useSelector(state => state.sound);
     const lead = useSelector(state => state.lead);
-    const scheduleCreated = useSelector(state => state.scheduleCreated);
-
-    const date = useSelector(state => state.currentDate);
-    const vols = useSelector(state => state.volunteersBlockout);
-    const sched = useSelector(state => state.schedule);
-    const volunteersBlockoutStillAvail = useSelector(state => state.volunteersBlockoutStillAvail);
+    const scheduleCreated = useSelector(state => state.scheduleCreated);    // boolean to check if schedule exists and so needs to be displayed
+    const currentDate = useSelector(state => state.currentDate);   // selected date
+    const volunteersBlockedOut = useSelector(state => state.volunteersBlockout);    // currently selected volunteers
+    const volunteersBlockoutStillAvail = useSelector(state => state.volunteersBlockoutStillAvail);  // volunteers not yet blocked out - on the left
 
     const dispatch = useDispatch();
 
+    const selectAVolunteer = (vols, freq, blocks) => {
+        // get the available volunteers that haven't been scheduled for any sunday yet
+        let lookup = vols.filter((i) => freq['0'].includes(i))
+        let freq_0 = true
+
+        // if none of those, get the ones who've only been scheduled once so far
+        if(lookup.length < 1) {
+            lookup = vols.filter((i) => freq['1'].includes(i))
+            freq_0 = false
+        }
+
+        // check if volunteers that have blockouts this month are available for this Sunday, if so, schedule one of them
+        let newLookup = lookup.filter((i) => blocks.has(i))
+        if(newLookup.length > 0) {
+            lookup = newLookup;
+        }
+
+        // randomly select a volunteer from this list now
+        let rando = Math.floor(Math.random() * lookup.length)
+        let vol = lookup[rando];
+
+        // remove them from the available list for this sunday
+        vols.splice(rando,1);
+        
+        return [freq_0, vol];
+    }
+
     const createSchedule = () => {
 
-        console.log(".................SCHEDULE CREATE START............")
         let schedule = []
-        let currSchedule;
-        let leadExists;
-        let teams = ['sound', 'livestream', 'slides']
-        console.log("inside: ", blockouts)
-        let frequencies = {'0':[...slides], '1':[]}
-        let allBlockouts = new Set();
+        let roles = ['sound', 'livestream', 'slides']
+        let frequencies = {'0':[...slides], '1':[]} // so each volunteer gets a chance you know
+        let allBlockouts = new Set();   // a list of all volunteers that have at least one sunday blocked out, use this to prioritize to schedule them whenever they are available, no volunteer left behind
+
         Object.keys(blockouts).forEach((d) => {
             for(let each of blockouts[d]) {
                 allBlockouts.add(each);
             }
-
         })
+        
+        console.log("start freqs: ", frequencies)
 
         Object.keys(blockouts).forEach((date) => {
             
-            let vols = blockouts[date];
-            currSchedule = {'date': date, 'slides':'', 'livestream':'', 'sound':''}
-            leadExists = false;
+            let vols = blockouts[date]; // volunteers blocked out for this day
+            let currSchedule = {'date': date, 'slides':'', 'livestream':'', 'sound':''} // new schedule object for this date
+            let leadExists = false;
                      
-            let availableSlides = slides.filter((vol) => !vols.includes(vol));
-            let availableLivestream = livestream.filter((vol) => !vols.includes(vol));
-            let availableSound = sound.filter((vol) => !vols.includes(vol));
+            let availableSlides = slides.filter((v) => !vols.includes(v));
+            let availableLivestream = livestream.filter((v) => !vols.includes(v));
+            let availableSound = sound.filter((v) => !vols.includes(v));
 
-            console.log("frequencies: ", frequencies)
-            console.log("all blocks: ", allBlockouts)
+            let lookup_freq_0;
+            let vol = '';
+            console.log("date: ", date)
+            console.log("blocked out: ", vols)
+            console.log("freqs: ", frequencies)
+            console.log("allBlocks: ", allBlockouts)
 
-            let lookup;
-            let newLookup;
-            let lookup_freq_0 = true
-            let vol;
-
-            for(let t of teams) {
+            for(let t of roles) {
                 
+                // scheduling first sound -> livestream -> slides, in order of available volunteers for each
                 if(t === 'sound') {
-                    lookup = availableSound.filter((i) => frequencies['0'].includes(i))
-                    if(lookup.length < 1) {
-                        lookup = availableSound.filter((i) => frequencies['1'].includes(i))
-                        lookup_freq_0 = false
-                    }
-                    newLookup = lookup.filter((i) => allBlockouts.has(i))
-                    if(newLookup.length > 0) {
-                        lookup = newLookup;
-                    }
-                    let rando = Math.floor(Math.random() * lookup.length)
-                    vol = lookup[rando];
-                    leadExists = (vol === lead[0] || vol === lead[1]);
-                    availableSound.splice(rando,1);
 
+                    let info = selectAVolunteer(availableSound, frequencies, allBlockouts);
+                    lookup_freq_0 = info[0];
+                    vol = info[1];
+
+                    // check if it's a leader
+                    leadExists = (vol === lead[0] || vol === lead[1]);
+
+                    // if a leader is scheduled, remove the other one from availability, don't nobody need 2 leaders on the same day
                     if(leadExists) {
                         if (vol === lead[0]) {
                             availableLivestream.splice(availableLivestream.indexOf(lead[1]),1);
@@ -86,27 +102,16 @@ const Home = () => {
                         }
                     }
 
+                    // remove this vol from the other team availability list too, no one getting scheduled for more than one role lol
                     availableLivestream.splice(availableLivestream.indexOf(vol),1);
                     availableSlides.splice(availableSlides.indexOf(vol),1);
                     
-    
                 } else if (t === 'livestream') {
 
-                    lookup = availableLivestream.filter((i) => frequencies['0'].includes(i))
-                    
-                    if(lookup.length < 1) {
-                        lookup = availableLivestream.filter((i) => frequencies['1'].includes(i))
-                        lookup_freq_0 = false
+                    let info = selectAVolunteer(availableLivestream, frequencies, allBlockouts);
+                    lookup_freq_0 = info[0];
+                    vol = info[1];
 
-                    }
-                    newLookup = lookup.filter((i) => allBlockouts.has(i))
-                    if(newLookup.length > 0) {
-                        lookup = newLookup;
-                    }
-                    let rando = Math.floor(Math.random() * lookup.length)
-                    vol = lookup[rando];
-                    
-                    availableLivestream.splice(rando,1);
                     if (!leadExists) {
                         leadExists = (vol === lead[0] || vol === lead[1]);
                         if(leadExists) {
@@ -118,29 +123,24 @@ const Home = () => {
                         }
                     }
                     availableSlides.splice(availableSlides.indexOf(vol),1);
+                
                 } else {
+
                     if (!leadExists) {
                         vol = availableSlides.includes(lead[0]) ? lead[0]
                                 : availableSlides.includes(lead[1]) ? lead[1]
                                 : "No lead available";
-                    } else {
-                        lookup = availableSlides.filter((i) => frequencies['0'].includes(i))
-                    
-                        if(lookup.length < 1) {
-                            lookup = availableSlides.filter((i) => frequencies['1'].includes(i))
-                            lookup_freq_0 = false
 
-                        }
-                        newLookup = lookup.filter((i) => allBlockouts.has(i))
-                        if(newLookup.length > 0) {
-                            lookup = newLookup;
-                            
-                        }
-                        let rando = Math.floor(Math.random() * lookup.length)
-                        vol = lookup[rando];
+                    } else {
+
+                        let info = selectAVolunteer(availableSlides, frequencies, allBlockouts);
+                        lookup_freq_0 = info[0];
+                        vol = info[1];
                         
                     }
                 }
+                console.log("selected vol: ", vol)
+                console.log("lookup_freq_0: ", lookup_freq_0)
                 currSchedule[t] = vol;
 
                 if(lookup_freq_0) {
@@ -152,69 +152,32 @@ const Home = () => {
                 allBlockouts.delete(vol);
             }
             schedule.push(currSchedule);
-        
         })
         dispatch(setSchedule(schedule));
-        
     }
 
     return(
         <>
-        <nav class="navbar navbar-dark bg-primary kh-position-fixed">
-            <div class="container-fluid">
-                <a class="navbar-brand me-0 pe-0" href="#">
-                <img src="KingsHillLogo.png" alt="" width="30" height="24" class="d-inline-block align-text-top pe-2"/>
-                 KH Scheduler
-                </a>
-                <button type="button" class="btn btn-primary" onClick={() => setShowModal(true)}>
-                <i class="far fa-question-circle"></i>
-                </button>
-                {showModal ?
-                    <div class="modal fade kh-view mt-5 pt-3" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setShowModal(false)}></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p className='text-muted'>You can see I haven't put much effort into this help section.</p>
-                                        <p>1. Select a blockout date to add volunteers to that date</p>
-                                        <p>2. Hit Save</p>
-                                        <p>3. Do this for all blockout dates</p>
-                                        <p>4. Made a mistake ? Just select the date that needs correction and add the volunteers again</p>
-                                        <p>5. Once all the blockouts are set, create the schedule</p>
-                                        <p>6. This app doesn't have permanent storage, so all data would be lost once you hit refresh lol</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
-                                    </div>
-                        </div>
-                    </div>
-                </div>:""}
-
-            </div>
-        </nav>
-        
+        <Nav/>
+        {/* the main content on the page - grid layout */}
         <div className="container mt-5 pt-5 kh-text-align-center">
-        
+            {/* the blockout date input */}
             <div className="row mb-5">
                 <div className="col">
-                    <Date date={date} nodate={nodate}/>
+                    <Date date={currentDate} nodate={nodate}/>
                 </div>
             </div>
-
+            {/* the two sections to display available volunteers on the left and selected volunteers on the right */}
             <div className="row mb-5 justify-content-center">
                 <div className="col-4 align-self-end d-none d-md-block ">
                     <VolunteerList volunteers={volunteersBlockoutStillAvail} display={false}/>
                 </div>
                 <div className="col-4 align-self-start kh-empty d-none d-md-block ">
-                {(vols.length > 0)? 
-                
-                    <VolunteerList volunteers={vols} display={true}/>
-                :<div className="kh-empty-content">None selected</div>}</div>
+                {(volunteersBlockedOut.length > 0)? 
+                    <VolunteerList volunteers={volunteersBlockedOut} display={true}/>
+                :<div className="kh-empty-content kh-round-borders">None selected</div>}</div>
             </div>
-
+            {/* responsive volunteer list for smaller screens */}
             <div className="row mb-5 justify-content-center d-sm-block d-md-none">
                 <div className="col-10">
                     <VolunteerList volunteers={volunteersBlockoutStillAvail} display={false}/>
@@ -222,31 +185,30 @@ const Home = () => {
             </div>
             <div className="row mb-5 justify-content-center d-sm-block d-md-none">
                 <div className="col-10 kh-empty">
-                    {(vols.length > 0)? 
-                        <VolunteerList volunteers={vols} display={true}/>
+                    {(volunteersBlockedOut.length > 0)? 
+                        <VolunteerList volunteers={volunteersBlockedOut} display={true}/>
                     :<div className="kh-empty-content">None selected</div>}
                 </div>
             </div>
-            
+            {/* save a blockout */}
             <div className="row mb-5">
                 <div className="col">
-                    <button type="button" class="btn btn-primary kh-width-max-content" onClick={() => dispatch(setBlockoutsForCurrentDate({date: date, volunteers: vols}))}>Save</button>
+                    <button type="button" class="btn btn-primary kh-width-max-content" onClick={() => dispatch(setBlockoutsForCurrentDate({date: currentDate, volunteers: volunteersBlockedOut}))}>Save</button>
                 </div>
             </div>
+            {/* create the schedule */}
             <div className="row mb-5">
                 <div className="col">
                     <button type="button" class="btn btn-danger kh-width-max-content" onClick={() => createSchedule()}>Create Schedule</button>
                 </div>
             </div>
+            {/* display the schedule as a table below once it's created */}
             <div className="row mb-5">
                 <div className="col">
                 {scheduleCreated ? <Schedule/>:""}
                 </div>
             </div>
         </div>
-        {console.log("date: ", date)}
-        {console.log("blocks: ", blockouts)}
-        {console.log("sched: ", sched)}
         </>
     )
 }
